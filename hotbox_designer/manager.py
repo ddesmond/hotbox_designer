@@ -2,13 +2,13 @@
 import json
 import os
 from functools import partial
-from PySide2 import QtWidgets, QtCore
+from Qt import QtWidgets, QtCore
 
 import hotbox_designer
 from hotbox_designer.commands import OPEN_COMMAND, CLOSE_COMMAND, SWITCH_COMMAND
 from hotbox_designer.reader import HotboxReader
 from hotbox_designer.designer.application import HotboxEditor
-from hotbox_designer.applications import Nuke, Maya, Houdini
+from hotbox_designer.applications import Nuke, Maya, Houdini, Clarisse
 from hotbox_designer.widgets import BoolCombo, Title, CommandButton
 from hotbox_designer.qtutils import icon
 from hotbox_designer.dialog import (
@@ -21,7 +21,7 @@ from hotbox_designer.data import (
 
 hotboxes = {}
 hotbox_manager = None
-APPLICATIONS = {'maya': Maya, 'nuke': Nuke, 'houdini': Houdini}
+APPLICATIONS = {'maya': Maya, 'nuke': Nuke, 'houdini': Houdini, 'clarisse': Clarisse}
 
 
 def launch_manager(application):
@@ -77,7 +77,7 @@ def hide_submenus():
 
 class HotboxManager(QtWidgets.QWidget):
     def __init__(self, application):
-        parent = application.main_window
+        parent = application.main_window or None
         super(HotboxManager, self).__init__(parent, QtCore.Qt.Tool)
         self.setWindowTitle('Hotbox Designer')
         self.application = application
